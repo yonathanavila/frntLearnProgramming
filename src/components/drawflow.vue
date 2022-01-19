@@ -2,7 +2,7 @@
 
 <el-container>
   <el-header class="header">
-      <h3>Drawflow Example vue3</h3>
+      <h3>Learn to programing</h3>
       <el-button type="primary"   @click="exportEditor">Export</el-button>
   </el-header>
   <el-container class="container">
@@ -44,6 +44,8 @@ import { onMounted, shallowRef, h, getCurrentInstance, render, readonly, ref } f
 import Node1 from './nodes/node1.vue'
 import Node2 from './nodes/node2.vue'
 import Node3 from './nodes/node3.vue'
+import Node4 from './nodes/node4.vue'
+import Node5 from './nodes/node5.vue'
 
 
 
@@ -69,6 +71,20 @@ export default {
             name: 'console.log',
             color: '#ff9900',
             item: 'Node3',
+            input:1,
+            output:0
+        },
+        {
+            name: 'Number',
+            color: '#476de0',
+            item: 'Node4',
+            input:0,
+            output:1
+        },
+        {
+            name: 'Number',
+            color: '#476de0',
+            item: 'Node5',
             input:1,
             output:0
         },
@@ -136,13 +152,15 @@ export default {
         elements[i].addEventListener('touchstart', drag, false );
       }
         
-       const id = document.getElementById("drawflow");
-       editor.value = new Drawflow(id, Vue, internalInstance.appContext.app._context);
-       editor.value.start();
-       
-       editor.value.registerNode('Node1', Node1, {}, {});
-       editor.value.registerNode('Node2', Node2, {}, {});
-       editor.value.registerNode('Node3', Node3, {}, {});
+        const id = document.getElementById("drawflow");
+        editor.value = new Drawflow(id, Vue, internalInstance.appContext.app._context);
+        editor.value.start();
+
+        editor.value.registerNode('Node1', Node1, {}, {});
+        editor.value.registerNode('Node2', Node2, {}, {});
+        editor.value.registerNode('Node3', Node3, {}, {});
+        editor.value.registerNode('Node4', Node4, {}, {});
+        editor.value.registerNode('Node5', Node5, {}, {});
 
        editor.value.import({"drawflow":{"Home":{"data":{"5":{"id":5,"name":"Node2","data":{"script":"(req,res) => {\n console.log(req);\n}"},"class":"Node2","html":"Node2","typenode":"vue","inputs":{"input_1":{"connections":[{"node":"6","input":"output_1"}]}},"outputs":{"output_1":{"connections":[]},"output_2":{"connections":[]}},"pos_x":1000,"pos_y":117},"6":{"id":6,"name":"Node1","data":{"url":"localhost/add", "method": "post"},"class":"Node1","html":"Node1","typenode":"vue","inputs":{},"outputs":{"output_1":{"connections":[{"node":"5","output":"input_1"}]}},"pos_x":137,"pos_y":89}}}}})
   })

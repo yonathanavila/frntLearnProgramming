@@ -12,7 +12,8 @@ export default defineComponent({
 
 <style scoped>
 div {
-    background: #494949;
+    background: white;
+    color:black;
     margin-top: -15px;
     margin-left: -15px;
     margin-right: -15px;
