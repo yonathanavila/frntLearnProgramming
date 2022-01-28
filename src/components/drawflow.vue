@@ -1,39 +1,35 @@
 <template>
-
-<el-container>
-  <el-header class="header">
-      <h3>Learn to programing</h3>
-      <el-button type="primary"   @click="exportEditor">Export</el-button>
-  </el-header>
-  <el-container class="container">
-    <el-aside width="250px" class="column">
-        <ul>
-            <li v-for="n in listNodes" :key="n" draggable="true" :data-node="n.item" @dragstart="drag($event)" class="drag-drawflow" >
-                <div class="node" :style="`background: ${n.color}`" >{{ n.name }}</div>
-            </li>
-        </ul>
-    </el-aside>
-    <el-main>
-        <div id="drawflow" @drop="drop($event)" @dragover="allowDrop($event)"></div>
-    </el-main>
+<div>
+  <el-container>
+    <el-header class="header">
+        <h3>Learn to programing</h3>
+        <el-button type="primary"   @click="exportEditor">Export</el-button>
+    </el-header>
+    <el-container class="container">
+      <el-aside width="250px" class="column">
+          <ul>
+              <li v-for="n in listNodes" :key="n" draggable="true" :data-node="n.item" @dragstart="drag($event)" class="drag-drawflow" >
+                  <div class="node" :style="`background: ${n.color}`" >{{ n.name }}</div>
+              </li>
+          </ul>
+      </el-aside>
+      <el-main>
+          <div id="drawflow" @drop="drop($event)" @dragover="allowDrop($event)"></div>
+      </el-main>
+    </el-container>
   </el-container>
-</el-container>
-<el-dialog
-    v-model="dialogVisible"
-    title="Export"
-    width="50%"
-  >
+  <el-dialog v-model="dialogVisible" title="Export" width="50%">
     <span>Data:</span>
     <pre><code>{{dialogData}}</code></pre>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
-          >Confirm</el-button
-        >
+        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
       </span>
     </template>
   </el-dialog>
+
+</div> 
 </template>
 <script>
 
@@ -41,11 +37,8 @@ import Drawflow from 'drawflow'
 import styleDrawflow from 'drawflow/dist/drawflow.min.css'
 import style from '../assets/style.css' 
 import { onMounted, shallowRef, h, getCurrentInstance, render, readonly, ref } from 'vue'
-import Node1 from './nodes/node1.vue'
-import Node2 from './nodes/node2.vue'
-import Node3 from './nodes/node3.vue'
-import Node4 from './nodes/node4.vue'
-import Node5 from './nodes/node5.vue'
+import nodeNumber from './nodes/nodeNumber.vue'
+import nodeAdd from './nodes/nodeAdd.vue'
 
 
 
@@ -54,39 +47,18 @@ export default {
   setup() {
    const listNodes = readonly([
         {
-            name: 'Get/Post',
-            color: '#49494970',
-            item: 'Node1',
+            name: 'Number',
+            color: '#476de0',
+            item: 'nodeNumber',
             input:0,
             output:1
         },
         {
-            name: 'Script',
-            color: 'blue',
-            item: 'Node2',
-            input:1,
-            output:2
-        },
-         {
-            name: 'console.log',
-            color: '#ff9900',
-            item: 'Node3',
-            input:1,
-            output:0
-        },
-        {
-            name: 'Number',
+            name: 'Add',
             color: '#476de0',
-            item: 'Node4',
-            input:0,
+            item: 'nodeAdd',
+            input:2,
             output:1
-        },
-        {
-            name: 'Number',
-            color: '#476de0',
-            item: 'Node5',
-            input:1,
-            output:0
         },
     ])
    
@@ -156,11 +128,8 @@ export default {
         editor.value = new Drawflow(id, Vue, internalInstance.appContext.app._context);
         editor.value.start();
 
-        editor.value.registerNode('Node1', Node1, {}, {});
-        editor.value.registerNode('Node2', Node2, {}, {});
-        editor.value.registerNode('Node3', Node3, {}, {});
-        editor.value.registerNode('Node4', Node4, {}, {});
-        editor.value.registerNode('Node5', Node5, {}, {});
+        editor.value.registerNode('nodeNumber', nodeNumber, {}, {});
+        editor.value.registerNode('nodeAdd', nodeAdd, {}, {});
 
        editor.value.import({"drawflow":{"Home":{"data":{"5":{"id":5,"name":"Node2","data":{"script":"(req,res) => {\n console.log(req);\n}"},"class":"Node2","html":"Node2","typenode":"vue","inputs":{"input_1":{"connections":[{"node":"6","input":"output_1"}]}},"outputs":{"output_1":{"connections":[]},"output_2":{"connections":[]}},"pos_x":1000,"pos_y":117},"6":{"id":6,"name":"Node1","data":{"url":"localhost/add", "method": "post"},"class":"Node1","html":"Node1","typenode":"vue","inputs":{},"outputs":{"output_1":{"connections":[{"node":"5","output":"input_1"}]}},"pos_x":137,"pos_y":89}}}}})
   })

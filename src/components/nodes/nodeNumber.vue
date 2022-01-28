@@ -1,18 +1,15 @@
 <template>
     <div ref="el">
-        <nodeHeader  title="Script"/>
+        <nodeHeader  title="Type your Number"/>
         <p>Number</p>
-        
-        <br>
-        <el-input v-model="number" df-url placeholder="Type your number" size="small" >
-            <template #prepend>Number is:</template>
+        <br><br>
+        <el-input v-model="number" df-number type="number" placeholder="Number is ..." size="small" >
         </el-input>
     </div>
 </template>
 <script>
-import { defineComponent, onMounted, getCurrentInstance, readonly, ref, nextTick } from 'vue'
+import { defineComponent, onMounted, ref, nextTick } from 'vue'
 import nodeHeader from './nodeHeader.vue'
-
 export default defineComponent({
     components: {
         nodeHeader
@@ -25,24 +22,24 @@ export default defineComponent({
         const method = ref('get');
         const dataNode = ref({});
 
-        df = getCurrentInstance().appContext.config.globalProperties.$df.value;
+        //df = getCurrentInstance().appContext.config.globalProperties.$df.value;
 
         onMounted(async () => {
             await nextTick()
             nodeId.value = el.value.parentElement.parentElement.id.slice(5)
             dataNode.value = df.getNodeFromId(nodeId.value)
+            console.log("HOlaa");
+            console.log(number);
             
             number.value = dataNode.value.data.number;
             method.value = dataNode.value.data.method;
         });
 
+        
+
         return {
             el, number, method
         }
     }
-
 })
-
-
-
 </script>

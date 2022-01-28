@@ -1,5 +1,5 @@
 {
-  "name": "drawflow-vue3-example",
+  "name": "frntDrawflow",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
